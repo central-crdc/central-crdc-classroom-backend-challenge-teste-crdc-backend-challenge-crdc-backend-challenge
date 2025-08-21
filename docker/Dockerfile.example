@@ -1,0 +1,7 @@
+# Exemplo: ajuste para sua linguagem/build
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY build/libs/app-all.jar app.jar
+EXPOSE 8080
+ENV OTEL_RESOURCE_ATTRIBUTES="service.name=service-assinaturas,service.version=0.1.0,deployment.environment=local"
+CMD ["java","-jar","/app/app.jar"]

@@ -1,0 +1,14 @@
+{
+  "event_id": "uuid",
+  "schema_version": "1.0",
+  "producer": "service-assinaturas",
+  "occurred_at": "2025-08-21T12:00:00Z",
+  "trace_id": "trace-...optional",
+  "idempotency_key": "123",
+  "payload": {
+    "assinatura_id": "123",
+    "status": "RECEBIDA",
+    "documento_hash": "sha256:...",
+    "cliente_id": "abc-123"
+  }
+}

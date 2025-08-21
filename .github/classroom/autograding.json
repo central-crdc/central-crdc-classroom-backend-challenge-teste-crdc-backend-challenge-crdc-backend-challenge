@@ -1,0 +1,64 @@
+{
+  "tests": [
+    {
+      "name": "Verificar estrutura de diretórios",
+      "setup": "",
+      "run": "test -d service && test -d automation && test -d data-ready",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 10
+    },
+    {
+      "name": "Verificar arquivo de serviço",
+      "setup": "",
+      "run": "find service -type f \\( -name '*.kt' -o -name '*.java' -o -name '*.go' \\) | grep -q .",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "Verificar Dockerfile",
+      "setup": "",
+      "run": "test -f Dockerfile || test -f service/Dockerfile || test -f docker/Dockerfile",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 15
+    },
+    {
+      "name": "Verificar automação",
+      "setup": "",
+      "run": "test -f automation/*.json || test -f automation/*.py || test -f automation/*.js",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 15
+    },
+    {
+      "name": "Verificar documentação Data-Ready",
+      "setup": "",
+      "run": "test -f data-ready/MIGRACAO.md && test -f data-ready/EVENTO_DOMINIO.json && test -f data-ready/INVARIANTES.md && test -f data-ready/CDC_VIEWS.md",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 20
+    },
+    {
+      "name": "Build do container",
+      "setup": "",
+      "run": "if [ -f Dockerfile ]; then docker build -t test-service .; elif [ -f service/Dockerfile ]; then docker build -t test-service service/; elif [ -f docker/Dockerfile ]; then docker build -t test-service -f docker/Dockerfile .; fi",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 300,
+      "points": 20
+    }
+  ]
+}

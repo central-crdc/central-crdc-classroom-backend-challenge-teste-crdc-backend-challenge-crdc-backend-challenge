@@ -1,0 +1,35 @@
+# GitHub Template Repository Configuration
+name: CRDC Backend Challenge Template
+description: Template para desafio técnico backend com foco em migração de monólito
+
+topics:
+  - backend-challenge
+  - microservices
+  - migration
+  - observability
+  - github-classroom
+  - crdc
+
+template:
+  include_all_branches: false
+  
+classroom:
+  autograding_enabled: true
+  feedback_pull_requests: true
+  
+settings:
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+  has_downloads: false
+  
+branch_protection:
+  main:
+    required_status_checks:
+      strict: false
+      contexts:
+        - "Autograding"
+        - "CI"
+    enforce_admins: false
+    required_pull_request_reviews: null
+    restrictions: null

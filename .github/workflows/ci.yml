@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detectar linguagem
+        run: |
+          if compgen -G "service/**/*.kt" > /dev/null; then echo "lang=kotlin" >> $GITHUB_OUTPUT; fi
+          if compgen -G "service/**/*.java" > /dev/null; then echo "lang=java" >> $GITHUB_OUTPUT; fi
+          if compgen -G "service/**/*.go" > /dev/null; then echo "lang=go" >> $GITHUB_OUTPUT; fi
+      - name: Placeholder build
+        run: echo "Adapte este workflow ao seu stack (Gradle/Maven/Go build)"

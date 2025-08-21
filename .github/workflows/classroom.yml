@@ -1,0 +1,75 @@
+name: GitHub Classroom Workflow
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Docker
+        uses: docker-practice/actions-setup-docker@v1
+        
+      - uses: education/autograding@v1
+        id: autograding
+        continue-on-error: true
+        
+      - name: Verificar logs ECS
+        run: |
+          echo "Verificando implementação de logs ECS..."
+          if grep -r "ECS\|Elastic Common Schema\|@timestamp" service/ 2>/dev/null; then
+            echo "✅ Logs ECS detectados"
+          else
+            echo "⚠️ Logs ECS não encontrados"
+          fi
+          
+      - name: Verificar OpenTelemetry
+        run: |
+          echo "Verificando implementação OpenTelemetry..."
+          if grep -r "opentelemetry\|otel\|OTEL" service/ 2>/dev/null || grep -r "opentelemetry\|otel" **/pom.xml **/build.gradle **/go.mod 2>/dev/null; then
+            echo "✅ OpenTelemetry detectado"
+          else
+            echo "⚠️ OpenTelemetry não encontrado"
+          fi
+          
+      - name: Análise de qualidade
+        run: |
+          echo "## 📊 Relatório de Qualidade" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Contar arquivos de código
+          echo "### Arquivos de Código" >> $GITHUB_STEP_SUMMARY
+          echo "- Java: $(find . -name '*.java' | wc -l) arquivos" >> $GITHUB_STEP_SUMMARY
+          echo "- Kotlin: $(find . -name '*.kt' | wc -l) arquivos" >> $GITHUB_STEP_SUMMARY
+          echo "- Go: $(find . -name '*.go' | wc -l) arquivos" >> $GITHUB_STEP_SUMMARY
+          echo "- Python: $(find . -name '*.py' | wc -l) arquivos" >> $GITHUB_STEP_SUMMARY
+          
+          # Verificar documentação
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Documentação" >> $GITHUB_STEP_SUMMARY
+          for file in data-ready/*.md; do
+            if [ -f "$file" ]; then
+              lines=$(wc -l < "$file")
+              echo "- $(basename $file): $lines linhas" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+          
+      - name: Resultado final
+        if: always()
+        run: |
+          echo "## 🎯 Resultado da Avaliação" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.autograding.outputs.points }}" ]; then
+            echo "**Pontuação:** ${{ steps.autograding.outputs.points }}/100" >> $GITHUB_STEP_SUMMARY
+          fi
