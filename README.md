@@ -13,6 +13,8 @@ Este desafio simula um cenário real de migração de um sistema de **assinatura
 
 ### 🎯 Objetivos
 
+Teste
+
 | Módulo | Descrição | Tecnologias |
 |--------|-----------|-------------|
 | **🔧 Microserviço** | API REST para gestão de assinaturas | Kotlin/Java/Go + ECS + OpenTelemetry |
@@ -23,6 +25,8 @@ Este desafio simula um cenário real de migração de um sistema de **assinatura
 
 ### Pré-requisitos
 - Docker & Docker Compose
+**(https)
+
 - JDK 11+ (se Java/Kotlin) ou Go 1.19+ 
 - Python 3.9+ (se escolher automação Python)
 
