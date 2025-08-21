@@ -13,6 +13,8 @@ Este desafio simula um cenário real de migração de um sistema de **assinatura
 
 ### 🎯 Objetivos
 
+Teste
+
 | Módulo | Descrição | Tecnologias |
 |--------|-----------|-------------|
 | **🔧 Microserviço** | API REST para gestão de assinaturas | Kotlin/Java/Go + ECS + OpenTelemetry |
